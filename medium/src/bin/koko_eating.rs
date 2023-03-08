@@ -6,19 +6,22 @@ fn main() {
 }
 
 fn min_eating_speed(piles: Vec<i32>, h: i32) -> i32 {
-    let max = piles.iter().max().unwrap().to_owned();
+    let mut right = piles.iter().max().unwrap().to_owned();
 
     if h as usize == piles.len() {
-        return max;
+        return right;
     }
 
     let mut left = 1;
-    let mut right = max;
 
     while left < right {
         let bph = left + (right - left) / 2;
 
-        let spent = get_time(bph, piles.to_owned());
+        let mut spent = 0;
+
+        for pile in &piles {
+            spent += (*pile as f64 / bph as f64).ceil() as i32;
+        }
 
         if h < spent {
             left = bph + 1;
@@ -28,14 +31,4 @@ fn min_eating_speed(piles: Vec<i32>, h: i32) -> i32 {
     }
 
     left
-}
-
-fn get_time(bph: i32, piles: Vec<i32>) -> i32 {
-    let mut time = 0;
-
-    for pile in piles {
-        time += (pile as f64 / bph as f64).ceil() as i32;
-    }
-
-    time
 }
