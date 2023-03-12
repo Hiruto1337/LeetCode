@@ -7,12 +7,12 @@ fn get_sum(a: i32, b: i32) -> i32 {
     let (a, b) = (a.chars().collect::<Vec<char>>(), b.chars().collect::<Vec<char>>());
     let (mut short, long) = if a.len() < b.len() {(a, b)} else {(b, a)};
 
+    println!("{short:?}");
+    println!("{long:?}\n");
+    
     while short.len() != long.len() {
         short.insert(0, '0');
     }
-
-    println!("{short:?}");
-    println!("{long:?}\n");
 
     let mut stock = false;
 

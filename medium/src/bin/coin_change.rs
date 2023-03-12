@@ -8,46 +8,25 @@ fn main(){
 }
 
 fn coin_change(coins: Vec<i32>, amount: i32) -> i32 {
-    use std::collections::HashMap;
-    let mut coins = coins;
-    coins.sort();
+    let mut dp: Vec<i32> = vec![10001; (amount + 1) as usize];
 
-    let mut map: HashMap<i32, i32> = HashMap::new();
+    dp[0] = 0;
 
-    let mut min_coins = -1;
+    for val in 1..=(amount as usize) {
+        for coin in &coins {
+            let result = val as i32 - coin;
 
-    for coin in coins.iter().rev() {
-        let mut accumulated = *coin;
-        let mut count = 1;
-
-        while accumulated <= amount {
-            if accumulated == amount && min_coins == -1 {
-                min_coins = count;
+            if 0 <= result {
+                dp[val] = dp[val].min(1 + dp[result as usize]);
             }
-            map.entry(accumulated).or_insert(count);
-            accumulated += *coin;
-            count += 1;
         }
     }
 
-    for coin in coins.iter().rev() {
-        let mut remains = amount;
-        let mut count = 0;
-
-        while remains >= 0 {
-            if let Some(add_count) = map.get(&remains) {
-                min_coins = min_coins.min(count + *add_count);
-                break;
-            }
-
-            count += 1;
-            remains -= *coin;
-        }
+    if dp[amount as usize] != 10001 {
+        return dp[amount as usize];
     }
 
-    println!("{map:?}");
-
-    min_coins
+    -1
 }
 
 // Create a HashMap that maps remains to a minimum count

@@ -1,10 +1,10 @@
 fn main() {
-    // let ideas = vec![
-    //     "coffee".to_string(),
-    //     "donuts".to_string(),
-    //     "time".to_string(),
-    //     "toffee".to_string(),
-    // ];
+    let ideas = vec![
+        "coffee".to_string(),
+        "donuts".to_string(),
+        "time".to_string(),
+        "toffee".to_string(),
+    ];
     // Output: 6
 
     // let ideas = vec![
